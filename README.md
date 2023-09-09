@@ -22,3 +22,6 @@ password : demo
 register endpoint  
 `{}/register`  
 `required fields : {username}, {email}, {password}, {mobile}`  
+login endpoint  
+`{}/login`  
+`required fields : {email}, {password}`
