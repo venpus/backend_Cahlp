@@ -9,3 +9,6 @@
 `./setup.sh`  
 `source backend_Cahlp-env/bin/activate`  
 `pip freeze > requirements.txt`  
+
+### Tutorials  
+install mongodb: [Click here](https://www.cherryservers.com/blog/how-to-install-and-start-using-mongodb-on-ubuntu-20-04)  
