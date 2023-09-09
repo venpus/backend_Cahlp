@@ -7,7 +7,7 @@ VENV_DIR="$PROJECT_NAME-env"
 
 sudo apt install python3.11
 sudo apt install python3.11-venv
-
+sudo apt-get install python3.11-dev
 # Check if the virtual environment folder exists
 if [ -d "$VENV_DIR" ]; then
     echo "Virtual environment already exists. Skipping creation."

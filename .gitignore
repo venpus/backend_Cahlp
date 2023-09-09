@@ -10,6 +10,7 @@ __pycache__
 db.sqlite3
 media
 backend_Cahlp/__pycache__/*
+*/__pycache__/*
 backend_Cahlp/__pycache__/settings.cpython-311.pyc
 # Backup files # 
 *.bak 
