@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'rest_framework',
     
     #custom apps
-    'api',
     'backend',
     'frontend'
 ]
@@ -88,22 +87,24 @@ WSGI_APPLICATION = 'backend_Cahlp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
-DATABASES = {
+if DEBUG:
+    DATABASES = {
         'default': {
-            'ENGINE': 'djongo',
-            'ENFORCE_SCHEMA': False,
-            'CLIENT': {
-                'host' : f'mongodb://{quote_plus(env("DATABASE_USERNAME"))}:{quote_plus(env("DATABASE_PASSWORD"))}@{env("DATABASE_HOST")}:{env("DATABASE_PORT")}/{env("DATABASE_DB")}?authSource=admin&retryWrites=true&w=majority',
-            }  
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
         }
-}
+    }
+else:
+    DATABASES = {
+            'default': {
+                'ENGINE': 'djongo',
+                'ENFORCE_SCHEMA': False,
+                'CLIENT': {
+                    'host' : f'mongodb://{quote_plus(env("DATABASE_USERNAME"))}:{quote_plus(env("DATABASE_PASSWORD"))}@{env("DATABASE_HOST")}:{env("DATABASE_PORT")}/{env("DATABASE_DB")}?authSource=admin&retryWrites=true&w=majority',
+                }  
+            }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -153,6 +154,6 @@ STATICFILES_DIRS = [
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
-# AUTH_USER_MODEL = "API.account"
+AUTH_USER_MODEL = "backend.account"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-STATICFILES_STORAGE = "backend_Cahlp.storage.ForgivingManifestStaticFilesStorage"
+#STATICFILES_STORAGE = "backend_Cahlp.storage.ForgivingManifestStaticFilesStorage"

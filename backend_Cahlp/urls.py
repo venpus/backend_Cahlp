@@ -9,8 +9,7 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include("api.urls")),
-    path('backend/', include("backend.urls")),
+    path('', include("backend.urls")),
     path('', include("frontend.urls")),
     #static files setup
     url(r'^favicon\.ico$',RedirectView.as_view(url='/static/assets/favicon.ico')),
