@@ -1,5 +1,4 @@
 from rest_framework.permissions import AllowAny
-from backend.models.usermodel import Account
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -18,12 +17,13 @@ class UserRegistrationAPIView(APIView):
             return Response({"status": "fail", "message": serializer.errors},  status=status.HTTP_406_NOT_ACCEPTABLE)
 
 class UserLoginAPIView(APIView):
+    permission_classes = (AllowAny,)
     def post(self, request):
         serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid():
-            username = serializer.validated_data.get('username')
-            email = serializer.validated_data.get('email')
-            password = serializer.validated_data.get('password')
+            username : str= serializer.validated_data.get('username')
+            email : str = serializer.validated_data.get('email')
+            password : str = serializer.validated_data.get('password')
             user = None
             if username:
                 user = authenticate(username=username, password=password)
