@@ -1,0 +1,22 @@
+name: Auto Merge Develop to Main
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Merge Changes
+        run: |
+          git config --global user.email "merger@gmail.com"
+          git config --global user.name "Raaj"
+          git checkout main
+          git merge develop --no-ff --no-edit
+          git push origin main
