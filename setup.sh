@@ -5,6 +5,9 @@ PROJECT_NAME="backend_Cahlp"
 PYTHON_VERSION="3.11"
 VENV_DIR="$PROJECT_NAME-env"
 
+sudo apt install python3.11
+sudo apt install python3.11-venv
+
 # Check if the virtual environment folder exists
 if [ -d "$VENV_DIR" ]; then
     echo "Virtual environment already exists. Skipping creation."
