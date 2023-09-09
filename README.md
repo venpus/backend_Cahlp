@@ -12,4 +12,16 @@
 
 ### Tutorials  
 install mongodb: [Click here](https://www.cherryservers.com/blog/how-to-install-and-start-using-mongodb-on-ubuntu-20-04)  
-fix mongdb user auth failed : (click here)[https://stackoverflow.com/questions/35881662/show-dbs-gives-not-authorized-to-execute-command-error]
+fix mongdb user auth failed : (click here)[https://stackoverflow.com/questions/35881662/show-dbs-gives-not-authorized-to-execute-command-error]  
+
+### test admin login  
+id: demo@gmail.com  
+password : demo  
+
+### endpoints  
+register endpoint  
+`{}/register`  
+`required fields : {username}, {email}, {password}, {mobile}`  
+login endpoint  
+`{}/login`  
+`required fields : {email}, {password}`
