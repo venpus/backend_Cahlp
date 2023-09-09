@@ -2,6 +2,7 @@
 from pathlib import Path
 import os
 import environ
+from urllib.parse import quote_plus
 # Initialise environment variables
 env = environ.Env(
     DEBUG=(bool, False)
@@ -87,13 +88,22 @@ WSGI_APPLICATION = 'backend_Cahlp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
+DATABASES = {
+        'default': {
+            'ENGINE': 'djongo',
+            'ENFORCE_SCHEMA': False,
+            'CLIENT': {
+                'host' : f'mongodb://{quote_plus(env("DATABASE_USERNAME"))}:{quote_plus(env("DATABASE_PASSWORD"))}@{env("DATABASE_HOST")}:{env("DATABASE_PORT")}/{env("DATABASE_DB")}?authSource=admin&retryWrites=true&w=majority',
+            }  
+        }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
