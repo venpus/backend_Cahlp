@@ -1,11 +1,22 @@
 from rest_framework import serializers
-from backend.models.usermodel import Account
+
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
+    """_summary_
+    serializer for user register 
+    Args:
+        serializers (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     status = serializers.CharField(write_only=True, default='success', required=False)
 
     class Meta:
-        model = Account
+        model = User
         fields = ('username', 'password', 'email', 'mobile', 'status')
         extra_kwargs = {
             'password': {'write_only': True},
@@ -13,9 +24,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         status = validated_data.pop('status', 'success')
-
         try:
-            user = Account.objects.create_user(
+            user = User.objects.create_user(
                 username=validated_data['username'],
                 password=validated_data['password'],
                 email=validated_data['email'],
@@ -33,6 +43,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
 
 class UserLoginSerializer(serializers.Serializer):
+    """_summary_
+    serializer for user login
+    Args:
+        serializers (_type_): _description_
+    """
     #username = serializers.CharField(required=False)
     email = serializers.EmailField(required=False)
     password = serializers.CharField(style={'input_type': 'password'})
