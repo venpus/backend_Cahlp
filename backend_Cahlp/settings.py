@@ -1,21 +1,27 @@
 
 from pathlib import Path
 import os
-
+import environ
+# Initialise environment variables
+env = environ.Env(
+    DEBUG=(bool, False)
+)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-4sj9#oqyf3%=(z@3@cgf_6%1qwea!&jeqcpv3xznj+&1-8=$3+'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env("ALLOWED_HOST").split(",")
+CSRF_TRUSTED_ORIGINS =  []
 
 
 # Application definition
@@ -27,6 +33,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    #third party apps
+    'rest_framework.authtoken',
+    'rest_framework',
     
     #custom apps
     'api',
@@ -43,6 +53,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # <-- And token auth
+        'rest_framework.authentication.SessionAuthentication', #<-- default auth
+
+    ],
+}
+
 
 ROOT_URLCONF = 'backend_Cahlp.urls'
 
@@ -110,9 +129,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_BASE = "/media/"
+MEDIA_URL = '/media/'
+
+STATICFILES_DIRS = [
+
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
+# AUTH_USER_MODEL = "API.account"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+STATICFILES_STORAGE = "backend_Cahlp.storage.ForgivingManifestStaticFilesStorage"
