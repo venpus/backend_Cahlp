@@ -8,3 +8,4 @@
 `chmod -x setup.sh`  
 `./setup.sh`  
 `source backend_Cahlp-env/bin/activate`  
+`pip freeze > requirements.txt`  
