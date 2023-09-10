@@ -5,10 +5,11 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate, login
 from backend.serializers.usersserializers import UserRegistrationSerializer, UserLoginSerializer
-from backend.serializers.deviceserializers import DeviceSerializer, DeviceDataSerializer, DeviceDataValidationSerializer
+from backend.serializers.deviceserializers import DeviceSerializer, DeviceDataSerializer, DeviceDataValidationSerializer,\
+    LatestDeviceDataSerializer
 from backend.utility import validate_mac_address
 from django.contrib.auth import get_user_model
-from backend.models.devicemodel import DeviceData, Device
+from backend.models.devicemodel import DeviceData, Device, OTAUpdate
 from django.conf import settings
 from django.http import Http404
 User = get_user_model()
@@ -124,9 +125,53 @@ class SensorDataReceiverView(APIView):
     
 class SensorDataRequesterView(APIView):
     permission_classes = (IsAuthenticated,)
-    
+    def get(self, request, format=None):
+        mac_address = request.query_params.get('mac', None)
+        try:
+            # Find the device by MAC address
+            device = Device.objects.get(mac=mac_address, user__username=request.user.username)
+        except Device.DoesNotExist:
+            return Response({"status": "error", "detail": "Device not found"}, status=status.HTTP_404_NOT_FOUND)
+        serializer = LatestDeviceDataSerializer(device)
+        # Serialize the data and return the response
+        data = serializer.get_latest_data(device)
+        if data:
+            return Response({"status" : "success", "detail": data}, status=status.HTTP_200_OK)
+        else:
+            return Response({"status": "error", "detail": "No data available"}, status=status.HTTP_404_NOT_FOUND)
 class DeviceResetView(APIView):
     permission_classes = (IsAuthenticated,)
-    
+    def get(self, request, format=None):
+        mac_address = request.query_params.get('mac', None)
+        username =  request.query_params.get('username', None)
+        try:
+            # Find the device by MAC address
+            device = Device.objects.get(mac=mac_address, user__username=request.user.username)
+        except Device.DoesNotExist:
+            return Response({"status": "error", "detail": "Device not found"}, status=status.HTTP_404_NOT_FOUND)
+        device_data_to_delete = DeviceData.objects.filter(device=device)
+        device_data_to_delete.delete()
+        return Response({"status" : "success", "detail" : "all device data deleted"}, status=status.HTTP_200_OK)
 class OTAView(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
+    def get(self, request,otaquery = None,  format=None):
+        print(otaquery)
+        ota_updates = OTAUpdate.objects.all()
+        latest_ota_update = None
+        for update in ota_updates:
+            if latest_ota_update is None or update.created_at > latest_ota_update.created_at:
+                latest_ota_update = update
+        input_param = request.query_params.get("vcheck", None)
+        if input_param != None and input_param == "OTAversion":
+            if latest_ota_update:
+                # latest_firmware_file = latest_ota_update.firmware_file
+                return Response({"status": "success", "detail" : latest_ota_update.version}, status=status.HTTP_200_OK)
+            else:
+                return Response({"status": "fail", "detail": "No OTA updates available"}, status=status.HTTP_404_NOT_FOUND)
+        if otaquery !=None and otaquery.lower() == "update":
+            if latest_ota_update:
+                latest_firmware_file = latest_ota_update.firmware_file
+                return Response({"status": "success", "detail" : {"link" : f"{settings.SITE_NAME}{latest_firmware_file.url}", "version" : latest_ota_update.version}}, status=status.HTTP_200_OK)
+            else:
+                return Response({"status": "fail", "detail": "No OTA updates available"}, status=status.HTTP_404_NOT_FOUND)
+        return Response({"status" : "fail", "detail" : "invalid endpoint"}, status=status.HTTP_204_NO_CONTENT)

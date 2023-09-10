@@ -1,5 +1,5 @@
 from backend.models.usermodel import Account
-from backend.models.devicemodel import Device, DeviceData
+from backend.models.devicemodel import Device, DeviceData, OTAUpdate
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib import admin
@@ -36,3 +36,7 @@ class DeviceDataAdmin(admin.ModelAdmin):
         return obj.device.user.username
     device_mac.short_description = "mac address"
     user_username.short_description = 'User Username'  #
+    
+@admin.register(OTAUpdate)
+class OTAUpdateAdmin(admin.ModelAdmin):
+    list_display = ("version", "firmware_file", "date_joined")
