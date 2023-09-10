@@ -15,7 +15,8 @@
 install mongodb: [Click here](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/)  
 create user mongodb: [click here](https://www.cherryservers.com/blog/how-to-install-and-start-using-mongodb-on-ubuntu-20-04)  
 fix mongdb user auth failed : [click here](https://stackoverflow.com/questions/35881662/show-dbs-gives-not-authorized-to-execute-command-error) 
-
+django setup production : [click here](https://www.digitalocean.com/community/tutorials/how-to-serve-django-applications-with-uwsgi-and-nginx-on-debian-8)
+django setup production : [click here](https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html)
 ### test admin login  
 username: demo  
 email: demo@gmail.com  
