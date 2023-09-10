@@ -23,9 +23,8 @@ class MyAccountManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
-    def create_superuser(self, username, password):
+    def create_superuser(self,username, password):
         user = self.model(
-            #email = self.normalize_email(email),
             username = username
         )
         user.set_password(password)
@@ -34,7 +33,7 @@ class MyAccountManager(BaseUserManager):
         user.is_active = True
         user.is_superuser = True
         user.is_user = True
-        user.save(using = self._db)
+        user.save(using=self._db)
         return user
 
 
@@ -51,7 +50,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_user = models.BooleanField(default=True)
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = [email, username]
+    REQUIRED_FIELDS = []
     objects = MyAccountManager()
     def __str__(self):
         return self.email
