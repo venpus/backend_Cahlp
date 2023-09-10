@@ -1,5 +1,5 @@
 from backend.models.usermodel import Account
-from backend.models.devicemodel import Device
+from backend.models.devicemodel import Device, DeviceData
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib import admin
@@ -25,4 +25,14 @@ class DeviceAdmin(admin.ModelAdmin):
 
     def user_username(self, obj):
         return obj.user.username
+    user_username.short_description = 'User Username'  #
+
+@admin.register(DeviceData)
+class DeviceDataAdmin(admin.ModelAdmin):
+    list_display = ("user_username", "device_mac", "PH_sensor_data", "T_sensor_data", "TDS_sensor_data", "date_joined")
+    def device_mac(self, obj):
+        return obj.device.mac
+    def user_username(self, obj):
+        return obj.device.user.username
+    device_mac.short_description = "mac address"
     user_username.short_description = 'User Username'  #
