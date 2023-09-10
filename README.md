@@ -17,8 +17,10 @@ create user mongodb: [click here](https://www.cherryservers.com/blog/how-to-inst
 fix mongdb user auth failed : [click here](https://stackoverflow.com/questions/35881662/show-dbs-gives-not-authorized-to-execute-command-error) 
 
 ### test admin login  
-id: demo@gmail.com  
+username: demo  
+email: demo@gmail.com  
 password : demo  
+`admin page : {}/admin`  
 
 ### endpoints  
 endpoint support both : session login , token base login  
