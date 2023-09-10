@@ -5,12 +5,18 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate, login
 from backend.serializers.usersserializers import UserRegistrationSerializer, UserLoginSerializer
-from backend.serializers.deviceserializers import DeviceSerializer
+from backend.serializers.deviceserializers import DeviceSerializer, DeviceDataSerializer
 from backend.utility import validate_mac_address
 from django.contrib.auth import get_user_model
+from backend.models.devicemodel import DeviceData
 from django.conf import settings
+from django.http import Http404
 User = get_user_model()
 
+class NotFoundAPIView(APIView):
+    def get(self, request,args, format=None):
+        # Raise an Http404 exception to indicate that the resource was not found
+        return Response({"status" : "fail", "detail" : "endpoint not found"}, status=status.HTTP_417_EXPECTATION_FAILED)
 
 class UserRegistrationAPIView(APIView):
     """
@@ -81,9 +87,9 @@ class DeviceRegisterAPIView(APIView):
 class MacAddressView(APIView):
     permission_classes = (IsAuthenticated,)
     def get(self, request, mac_address, format=None):
-        if not validate_mac_address(mac_address):
-            return Response({'status' : 'fail','detail': 'Invalid MAC address format'}, status=status.HTTP_400_BAD_REQUEST)
-        return Response({'MAC Address': mac_address}, status=status.HTTP_200_OK)
+        device_data = DeviceData.objects.filter(device__mac=mac_address, device__user__username=request.user.username)
+        serializer = DeviceDataSerializer(device_data, many=True)
+        return Response({"status" : "success", "detail" : serializer.data}, status=status.HTTP_200_OK)
     
 
 class SensorDataReceiverView(APIView):
