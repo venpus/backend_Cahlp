@@ -48,6 +48,6 @@ class UserLoginSerializer(serializers.Serializer):
     Args:
         serializers (_type_): _description_
     """
-    #username = serializers.CharField(required=False)
+    username = serializers.CharField(required=False)
     email = serializers.EmailField(required=False)
     password = serializers.CharField(style={'input_type': 'password'})

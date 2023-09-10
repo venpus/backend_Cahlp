@@ -19,6 +19,8 @@ id: demo@gmail.com
 password : demo  
 
 ### endpoints  
+endpoint support both : session login , token base login  
+for token login you can add Authorization: Token your-auth-token in your header ( you can optain the token from login endpoint)  
 register endpoint  
 `{}/register,`  
 `required fields : {username}, {email}, {password}, {mobile}`  

@@ -40,9 +40,10 @@ class UserLoginAPIView(APIView):
     def post(self, request):
         serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid():
-            username : str= serializer.validated_data.get('username')
-            email : str = serializer.validated_data.get('email')
-            password : str = serializer.validated_data.get('password')
+            print(serializer.validated_data)
+            username = serializer.validated_data.get('username')
+            email = serializer.validated_data.get('email')
+            password = serializer.validated_data.get('password')
             user = None
             if username:
                 user = authenticate(username=username, password=password)

@@ -42,7 +42,7 @@ class MyAccountManager(BaseUserManager):
 class Account(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name='email', max_length=60, unique=True)
     username = models.CharField(verbose_name='username', max_length=60, unique=True)
-    mobile = models.CharField(verbose_name = "phone" , max_length = 15, unique = False, default = True, null= True)
+    mobile = models.CharField(verbose_name = "phone" , max_length = 15, unique = False, default = "", null= True)
     first_name = models.CharField(max_length=60, default=None, null=True, blank=True)
     last_name = models.CharField(max_length=60, default=None, null=True, blank=True)
     date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
