@@ -23,10 +23,10 @@ class MyAccountManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
-    def create_superuser(self, email, password):
+    def create_superuser(self, username, password):
         user = self.model(
-            email = self.normalize_email(email),
-            #username = username
+            #email = self.normalize_email(email),
+            username = username
         )
         user.set_password(password)
         user.is_admin = True
