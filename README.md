@@ -39,3 +39,17 @@ sensor data receiver
 `{}/sensors`  
 `required fields : {temp}, {ph}, {tds}`  
 `method : GET , login required`  
+request Sensor Data(latest data)
+`{}/sensors/request`  
+`required fields : {mac}`  
+`method : GET, login required`  
+device reset  
+`{}/devicereset`  
+`required fields : {mac}, {username}`  
+`method : GET, login required`
+OTA LATEST GET VERSION  
+`{}/ota/vcheck=OTAversion`  
+`method: GET`  
+OTA LATEST VERSION, DOWNLOAD LINK  
+`{}/ota/update`  
+`method: GET`
