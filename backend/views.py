@@ -5,10 +5,10 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate, login
 from backend.serializers.usersserializers import UserRegistrationSerializer, UserLoginSerializer
-from backend.serializers.deviceserializers import DeviceSerializer, DeviceDataSerializer
+from backend.serializers.deviceserializers import DeviceSerializer, DeviceDataSerializer, DeviceDataValidationSerializer
 from backend.utility import validate_mac_address
 from django.contrib.auth import get_user_model
-from backend.models.devicemodel import DeviceData
+from backend.models.devicemodel import DeviceData, Device
 from django.conf import settings
 from django.http import Http404
 User = get_user_model()
@@ -94,7 +94,33 @@ class MacAddressView(APIView):
 
 class SensorDataReceiverView(APIView):
     permission_classes = (IsAuthenticated,)
-    
+    def get(self, request, format=None):
+        # Deserialize the request data using the serializer
+        serializer = DeviceDataValidationSerializer(data=request.query_params)
+        if serializer.is_valid():
+            # Extract the deserialized data
+            validated_data = serializer.validated_data
+            ph = validated_data.get('ph')
+            temp = validated_data.get('temp')
+            tds = validated_data.get('tds')
+            mac = validated_data.get('mac')
+            # Check if a Device with the provided mac address exists
+            try:
+                device = Device.objects.get(mac=mac, user__username=request.user.username)
+            except Device.DoesNotExist:
+                return Response({"status": "fail", "detail": "Device(mac) not found"}, status=status.HTTP_404_NOT_FOUND)
+            # Create a DeviceData instance with the parsed data
+            device_data = DeviceData(
+                device=device,
+                PH_sensor_data=ph,
+                T_sensor_data=temp,
+                TDS_sensor_data=tds
+            )
+            # Save the data to the DeviceData model
+            device_data.save()
+            return Response({"status": "success", "detail" : "data saved"}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({"status" : "fail", "detail" : serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
     
 class SensorDataRequesterView(APIView):
     permission_classes = (IsAuthenticated,)

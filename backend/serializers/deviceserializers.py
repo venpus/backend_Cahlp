@@ -13,3 +13,9 @@ class DeviceDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = DeviceData
         exclude = ['date_joined']
+        
+class DeviceDataValidationSerializer(serializers.Serializer):
+    ph = serializers.IntegerField()
+    temp = serializers.IntegerField()
+    tds = serializers.IntegerField()
+    mac = serializers.CharField(max_length=17)
