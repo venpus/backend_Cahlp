@@ -1,0 +1,13 @@
+[Unit]
+Description=uWSGI instance to serve projectalfa
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/backend_Cahlp/
+Environment="PATH=/home/ubuntu/backend_Cahlp/backend_Cahlp-env/bin"
+ExecStart=/home/ubuntu/backend_Cahlp/backend_Cahlp-env/bin/uwsgi --ini project.ini
+
+[Install]
+WantedBy=multi-user.target
