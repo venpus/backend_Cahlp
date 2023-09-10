@@ -20,6 +20,7 @@ fix mongdb user auth failed : [click here](https://stackoverflow.com/questions/3
 username: demo  
 email: demo@gmail.com  
 password : demo  
+`admin page : {}/admin`  
 
 ### endpoints  
 endpoint support both : session login , token base login  
