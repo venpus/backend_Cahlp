@@ -7,11 +7,9 @@ from django.contrib.auth import authenticate, login
 from backend.serializers.usersserializers import UserRegistrationSerializer, UserLoginSerializer
 from backend.serializers.deviceserializers import DeviceSerializer, DeviceDataSerializer, DeviceDataValidationSerializer,\
     LatestDeviceDataSerializer
-from backend.utility import validate_mac_address
 from django.contrib.auth import get_user_model
 from backend.models.devicemodel import DeviceData, Device, OTAUpdate
 from django.conf import settings
-from django.http import Http404
 User = get_user_model()
 
 class NotFoundAPIView(APIView):

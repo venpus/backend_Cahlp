@@ -99,10 +99,11 @@ else:
     DATABASES = {
             'default': {
                 'ENGINE': 'djongo',
-                'ENFORCE_SCHEMA': False,
-                'CLIENT': {
-                    'host' : f'mongodb://{quote_plus(env("DATABASE_USERNAME"))}:{quote_plus(env("DATABASE_PASSWORD"))}@{env("DATABASE_HOST")}:{env("DATABASE_PORT")}/{env("DATABASE_DB")}?authSource=admin&retryWrites=true&w=majority',
-                }  
+                'NAME': env("DATABASE_DB"),
+                # 'ENFORCE_SCHEMA': False,
+                # 'CLIENT': {
+                #     'host' : f'mongodb://{quote_plus(env("DATABASE_USERNAME"))}:{quote_plus(env("DATABASE_PASSWORD"))}@{env("DATABASE_HOST")}:{env("DATABASE_PORT")}/{env("DATABASE_DB")}?authSource=admin&retryWrites=true&w=majority',
+                # }  
             }
     }
 
