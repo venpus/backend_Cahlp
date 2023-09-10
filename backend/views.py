@@ -6,6 +6,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate, login
 from backend.serializers.usersserializers import UserRegistrationSerializer, UserLoginSerializer
 from backend.serializers.deviceserializers import DeviceSerializer
+from backend.utility import validate_mac_address
 from django.contrib.auth import get_user_model
 from django.conf import settings
 User = get_user_model()
@@ -51,15 +52,15 @@ class UserLoginAPIView(APIView):
 
 
 class DeviceRegisterAPIView(APIView):
+    """
+    device register view
+    """
     permission_classes = (IsAuthenticated,)
-
     def get(self, request, format=None):
         mac_param = request.query_params.get('mac', None)
         username_param = request.query_params.get('username', None)
-
         if mac_param is None or username_param is None:
             return Response({"status": "fail", "detail": "Both 'mac' and 'username' parameters are required."}, status=status.HTTP_400_BAD_REQUEST)
-
         # Check if the user with the provided username exists
         try:
             user = User.objects.get(username=username_param)
@@ -70,10 +71,30 @@ class DeviceRegisterAPIView(APIView):
         # Create a new Device instance
         device_data = {'mac': mac_param, 'user': user.id}
         serializer = DeviceSerializer(data=device_data)
-
         if serializer.is_valid():
             serializer.save()
             stream_link = f"{settings.SITE_NAME}/{mac_param}"
             return Response({"status": "success", "detail" : stream_link}, status=status.HTTP_201_CREATED)
         else:
             return Response({"status" : "fail", "detail" : serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+class MacAddressView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def get(self, request, mac_address, format=None):
+        if not validate_mac_address(mac_address):
+            return Response({'status' : 'fail','detail': 'Invalid MAC address format'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'MAC Address': mac_address}, status=status.HTTP_200_OK)
+    
+
+class SensorDataReceiverView(APIView):
+    permission_classes = (IsAuthenticated,)
+    
+    
+class SensorDataRequesterView(APIView):
+    permission_classes = (IsAuthenticated,)
+    
+class DeviceResetView(APIView):
+    permission_classes = (IsAuthenticated,)
+    
+class OTAView(APIView):
+    permission_classes = (IsAuthenticated,)

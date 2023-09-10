@@ -11,9 +11,9 @@ class Device(models.Model):
 
 class DeviceData(models.Model):
     device = models.ForeignKey(Device, on_delete=models.CASCADE)
-    PH_sensor_data = models.CharField(max_length=17, unique=True, default='', null=True)
-    T_sensor_data = models.CharField(max_length=17, unique=True, default='', null=True)
-    TDS_sensor_data = models.CharField(max_length=17, unique=True, default='', null=True)
+    PH_sensor_data = models.IntegerField(unique=True, default='', null=True)
+    T_sensor_data = models.IntegerField(unique=True, default='', null=True)
+    TDS_sensor_data = models.IntegerField(unique=True, default='', null=True)
     date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
     def __str__(self):
         return "mac: {}, ph: {}, temp: {}, tds: {}".format(Device.mac, self.PH_sensor_data, self.T_sensor_data, self.TDS_sensor_data)
