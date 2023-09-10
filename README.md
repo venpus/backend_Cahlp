@@ -20,6 +20,22 @@ password : demo
 
 ### endpoints  
 register endpoint  
-`{}/register, required fields : {username}, {email}, {password}, {mobile}`  
+`{}/register,`  
+`required fields : {username}, {email}, {password}, {mobile}`  
+`method : POST`  
 login endpoint  
-`{}/login, required fields : {email}, {password}`
+`{}/login`  
+`required fields : {email}, {password}`  
+`method : POST`  
+device register  
+`{}/devreg`  
+`required fields : {mac}, {username}`  
+`method : GET, login required`  
+mac address stream data  
+`{mac address}`  
+`required fields : {mac}`  
+`method : GET, login required`  
+sensor data receiver  
+`{}/sensors`  
+`required fields : {temp}, {ph}, {tds}`  
+`method : GET , login required`  
