@@ -17,7 +17,7 @@ class DeviceDataSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(format="%Y%m%d%H%M%S")
     class Meta:
         model = DeviceData
-        fields = ("PH_sensor_data", "T_sensor_data", "TDS_sensor_data", "created_at")
+        fields = ("ph", "temp", "tds", "created_at")
         
 class DeviceDataValidationSerializer(serializers.Serializer):
     ph = serializers.IntegerField()
