@@ -59,4 +59,6 @@ OTA LATEST GET VERSION
 `method: GET`  
 OTA LATEST VERSION, DOWNLOAD LINK  
 `{}/ota/update`  
-`method: GET`
+`method: GET`  
+
+### Server start stop  
