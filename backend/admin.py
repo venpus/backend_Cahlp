@@ -29,7 +29,7 @@ class DeviceAdmin(admin.ModelAdmin):
 
 @admin.register(DeviceData)
 class DeviceDataAdmin(admin.ModelAdmin):
-    list_display = ("user_username", "device_mac", "PH_sensor_data", "T_sensor_data", "TDS_sensor_data", "date_joined")
+    list_display = ("user_username", "device_mac", "PH_sensor_data", "T_sensor_data", "TDS_sensor_data", "created_at")
     def device_mac(self, obj):
         return obj.device.mac
     def user_username(self, obj):
@@ -39,4 +39,4 @@ class DeviceDataAdmin(admin.ModelAdmin):
     
 @admin.register(OTAUpdate)
 class OTAUpdateAdmin(admin.ModelAdmin):
-    list_display = ("version", "firmware_file", "date_joined")
+    list_display = ("version", "firmware_file", "created_at")

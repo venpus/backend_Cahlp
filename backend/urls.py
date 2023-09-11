@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 from backend.views import UserRegistrationAPIView, UserLoginAPIView,\
     DeviceRegisterAPIView, MacAddressView, SensorDataReceiverView, \
-        SensorDataRequesterView, DeviceResetView, OTAView, NotFoundAPIView
+        SensorDataRequesterView, DeviceResetView, OTAView, CAMView, CAMSettingView
 
 urlpatterns = [
     path('register/', UserRegistrationAPIView.as_view(), name='user-registration'),
@@ -12,8 +12,9 @@ urlpatterns = [
     path('devicereset/', DeviceResetView.as_view(), name = 'device-reset'),
     path('ota/', OTAView.as_view(), name = "ota"),
     path('ota/<str:otaquery>', OTAView.as_view(), name = "ota"),
-    re_path(r'^(?P<mac_address>([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2}))$', MacAddressView.as_view(), name='mac-address'),
-    path('<str:args>', NotFoundAPIView.as_view(), name='not-found-api'),
+    path('cam/', CAMView.as_view(), name = 'CAM-View'),
+    path('cam/setting/', CAMSettingView.as_view(), name = 'CAM-setting'),
+    path('<str:mac_address>', MacAddressView.as_view(), name='mac-address'),
 
 
     
