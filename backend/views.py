@@ -88,7 +88,7 @@ class MacAddressView(APIView):
     def get(self, request, mac_address, format=None):
         device_data = DeviceData.objects.filter(device__mac=mac_address)
         serializer = DeviceDataSerializer(device_data, many=True)
-        return Response({"ret" : "success", "data" : serializer.data}, status=status.HTTP_200_OK)
+        return Response({"ret" : "success", "data" : serializer.data, "mac" : mac_address}, status=status.HTTP_200_OK)
     
 
 class SensorDataReceiverView(APIView):
