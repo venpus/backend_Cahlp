@@ -58,7 +58,7 @@ REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'backend.custom_exception_handler.custom_exception_handler',
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',  # <-- And token auth
-        'rest_framework.authentication.SessionAuthentication', #<-- default auth
+        #'rest_framework.authentication.SessionAuthentication', #<-- default auth
 
     ],
 }
