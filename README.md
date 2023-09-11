@@ -38,29 +38,37 @@ login endpoint
 device register  
 `{}/devreg`  
 `required fields : {mac}, {username}`  
-`method : GET, login required`  
+`method : GET`  
 mac address stream data  
 `{mac address}`  
 `required fields : {mac}`  
-`method : GET, login required`  
+`method : GET`  
 sensor data receiver  
 `{}/sensors`  
 `required fields : {temp}, {ph}, {tds}`  
-`method : GET , login required`  
+`method : GET `  
 request Sensor Data(latest data)
 `{}/sensors/request`  
 `required fields : {mac}`  
-`method : GET, login required`  
+`method : GET`  
 device reset  
 `{}/devicereset`  
 `required fields : {mac}, {username}`  
-`method : GET, login required`
+`method : GET`
 OTA LATEST GET VERSION  
 `{}/ota/vcheck=OTAversion`  
 `method: GET`  
 OTA LATEST VERSION, DOWNLOAD LINK  
 `{}/ota/update`  
 `method: GET`  
+Setting CAM Enable  
+`{}/cam`  
+`required fields : {mac}, {username}, {setting}`  
+`method : GET`  
+Setting CAM STATUS  
+`{}/cam/setting`  
+`required fields : {mac} {username}`  
+`method : GET`
 
 ### Server start stop  
 sudo systemctl start  mariadb
