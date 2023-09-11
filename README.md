@@ -62,3 +62,9 @@ OTA LATEST VERSION, DOWNLOAD LINK
 `method: GET`  
 
 ### Server start stop  
+sudo systemctl stop mongod  
+sudo systemctl start mongod  
+sudo systemctl status mongod
+sudo systemctl stop project  
+sudo systemctl start project  
+sudo systemctl status project
