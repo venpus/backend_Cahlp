@@ -18,6 +18,7 @@ fix mongdb user auth failed : [click here](https://stackoverflow.com/questions/3
 django setup production : [click here](https://www.digitalocean.com/community/tutorials/how-to-serve-django-applications-with-uwsgi-and-nginx-on-debian-8)
 django setup production : [click here](https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html)
 ### test admin login  
+create superuser : python manage.py createsuperuserwithemail
 username: demo  
 email: demo@gmail.com  
 password : demo  
