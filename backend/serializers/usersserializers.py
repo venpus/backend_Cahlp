@@ -20,6 +20,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         fields = ('username', 'password', 'email', 'mobile', 'status')
         extra_kwargs = {
             'password': {'write_only': True},
+            'mobile': {'required': True, 'error_messages': {'required': 'Mobile is required.'}}
         }
 
     def create(self, validated_data):
