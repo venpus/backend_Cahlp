@@ -119,14 +119,14 @@ if DEBUG:
     }
 else:
     DATABASES = {
-            'default': {
-                'ENGINE': 'djongo',
-                'NAME': env("DATABASE_DB"),
-                # 'ENFORCE_SCHEMA': False,
-                # 'CLIENT': {
-                #     'host' : f'mongodb://{quote_plus(env("DATABASE_USERNAME"))}:{quote_plus(env("DATABASE_PASSWORD"))}@{env("DATABASE_HOST")}:{env("DATABASE_PORT")}/{env("DATABASE_DB")}?authSource=admin&retryWrites=true&w=majority',
-                # }  
-            }
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': env('DATABASE_DB'),
+            'USER': env('DATABASE_USERNAME'),
+            'PASSWORD': env('DATABASE_PASSWORD'),
+            'HOST': env('DATABASE_HOST'),
+            'PORT': env('DATABASE_PORT'),
+        }
     }
 
 # Password validation
