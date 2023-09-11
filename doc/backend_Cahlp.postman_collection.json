@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "05ca8379-6f27-4744-9eaa-d578d88b67e0",
+		"_postman_id": "ee61ff36-b777-49e0-82f3-1d202457b641",
 		"name": "backend_Cahlp",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "10325321",
-		"_collection_link": "https://red-eclipse-355994.postman.co/workspace/Team-Workspace~c908f4b9-4a30-429b-8c9d-6238f6feb103/collection/10325321-05ca8379-6f27-4744-9eaa-d578d88b67e0?action=share&source=collection_link&creator=10325321"
+		"_exporter_id": "10325321"
 	},
 	"item": [
 		{
@@ -20,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"username\" : \"test\", \"email\" : \"test@gmail.com\",\"mobile\": \"4565434543\", \"password\" : \"test\"}"
+					"raw": "{\"username\" : \"test111\", \"email\" : \"test111@gmail.com\",\"mobile\": \"4565434543\", \"password\" : \"test\"}"
 				},
 				"url": {
 					"raw": "http://3.0.184.230/register/",
@@ -52,7 +51,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"username\" : \"test\", \"password\" : \"test\"}"
+					"raw": "{\"username\" : \"test111\", \"password\" : \"test\"}"
 				},
 				"url": {
 					"raw": "http://3.0.184.230/login/",
@@ -87,12 +86,14 @@
 					{
 						"key": "Authorization",
 						"value": "Token bd558e8226143adee2ac7cd4588dc9ee2bfcef2d",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					},
 					{
 						"key": "Content-Type",
 						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"body": {
@@ -100,7 +101,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://3.0.184.230/devreg/?mac=77:AD:C2:C5:16:CF&username=test",
+					"raw": "http://3.0.184.230/devreg/?mac=77:AD:C2:C5:16:CF&username=test111",
 					"protocol": "http",
 					"host": [
 						"3",
@@ -119,7 +120,7 @@
 						},
 						{
 							"key": "username",
-							"value": "test"
+							"value": "test111"
 						}
 					]
 				}
@@ -139,7 +140,8 @@
 					{
 						"key": "Authorization",
 						"value": "Token bd558e8226143adee2ac7cd4588dc9ee2bfcef2d",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"url": {
@@ -171,11 +173,12 @@
 					{
 						"key": "Authorization",
 						"value": "Token bd558e8226143adee2ac7cd4588dc9ee2bfcef2d",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"url": {
-					"raw": "http://3.0.184.230/sensors/?mac=77:AD:C2:C5:16:CF&temp=5&ph=10&tds=20",
+					"raw": "http://3.0.184.230/sensors/?mac=77:AD:C2:C5:16:CF&temp=5&ph=10&tds=20&username=test111",
 					"protocol": "http",
 					"host": [
 						"3",
@@ -203,6 +206,10 @@
 						{
 							"key": "tds",
 							"value": "20"
+						},
+						{
+							"key": "username",
+							"value": "test111"
 						}
 					]
 				}
@@ -222,11 +229,12 @@
 					{
 						"key": "Authorization",
 						"value": "Token bd558e8226143adee2ac7cd4588dc9ee2bfcef2d",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"url": {
-					"raw": "http://3.0.184.230/sensors/request/?mac=77:AD:C2:C5:16:CF",
+					"raw": "http://3.0.184.230/sensors/request/?mac=77:AD:C2:C5:16:CF&username=test111",
 					"protocol": "http",
 					"host": [
 						"3",
@@ -243,6 +251,10 @@
 						{
 							"key": "mac",
 							"value": "77:AD:C2:C5:16:CF"
+						},
+						{
+							"key": "username",
+							"value": "test111"
 						}
 					]
 				}
@@ -262,11 +274,12 @@
 					{
 						"key": "Authorization",
 						"value": "Token bd558e8226143adee2ac7cd4588dc9ee2bfcef2d",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"url": {
-					"raw": "http://3.0.184.230/devicereset/?mac=77:AD:C2:C5:16:CF&username=test",
+					"raw": "http://3.0.184.230/devicereset/?mac=77:AD:C2:C5:16:CF&username=test111",
 					"protocol": "http",
 					"host": [
 						"3",
@@ -285,7 +298,7 @@
 						},
 						{
 							"key": "username",
-							"value": "test"
+							"value": "test111"
 						}
 					]
 				}
@@ -349,6 +362,81 @@
 					"path": [
 						"ota",
 						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CAM setting update",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://3.0.184.230/cam/?setting=true&mac=77:AD:C2:C5:16:CF&username=test111",
+					"protocol": "http",
+					"host": [
+						"3",
+						"0",
+						"184",
+						"230"
+					],
+					"path": [
+						"cam",
+						""
+					],
+					"query": [
+						{
+							"key": "setting",
+							"value": "true"
+						},
+						{
+							"key": "mac",
+							"value": "77:AD:C2:C5:16:CF"
+						},
+						{
+							"key": "username",
+							"value": "test111"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CAM setting view",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://3.0.184.230/cam/setting/?mac=77:AD:C2:C5:16:CF&username=test111",
+					"protocol": "http",
+					"host": [
+						"3",
+						"0",
+						"184",
+						"230"
+					],
+					"path": [
+						"cam",
+						"setting",
+						""
+					],
+					"query": [
+						{
+							"key": "mac",
+							"value": "77:AD:C2:C5:16:CF"
+						},
+						{
+							"key": "username",
+							"value": "test111"
+						}
 					]
 				}
 			},
