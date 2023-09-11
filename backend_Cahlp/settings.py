@@ -55,10 +55,16 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'backend.custom_exception_handler.custom_exception_handler',
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',  # Use JSONRenderer for rendering responses
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',  # Use JSONParser for parsing request data
+    ),
+    'DEFAULT_CONTENT_TYPE': 'application/json',
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',  # <-- And token auth
-        #'rest_framework.authentication.SessionAuthentication', #<-- default auth
+        'rest_framework.authentication.SessionAuthentication', #<-- default auth
 
     ],
 }
