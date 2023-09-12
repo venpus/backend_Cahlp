@@ -23,8 +23,8 @@ source $VENV_DIR/bin/activate
 pip install -r requirements.txt
 
 # Run Django migrations
-python manage.py makemigrations
-python manage.py migrate
+python manage.py makemigrations backend
+python manage.py migrate backend
 
 # Deactivate the virtual environment when you're done
 deactivate
