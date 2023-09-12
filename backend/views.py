@@ -78,7 +78,7 @@ class DeviceRegisterAPIView(APIView):
         serializer = DeviceSerializer(data=device_data)
         if serializer.is_valid():
             serializer.save()
-            stream_link = f"{settings.STEAM_SITE}{mac_param.replace(':','').lower()}"
+            stream_link = f"{settings.STEAM_SITE}t{mac_param.replace(':','').lower()}"
             return Response({"ret": "success", "live" : stream_link, "username" : username_param, "mac" : mac_param}, status=status.HTTP_201_CREATED)
         else:
             return Response({"ret" : "fail", "detail" : serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
