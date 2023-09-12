@@ -71,9 +71,10 @@ Setting CAM STATUS
 `method : GET`
 
 ### Server start stop  
-sudo systemctl start  mariadb  
+ 
 sudo systemctl stop  mariadb  
-sudo systemctl status  mariadb  
 sudo systemctl stop project  
-sudo systemctl start project  
+sudo systemctl start  mariadb  
+sudo systemctl start project   
+sudo systemctl status  mariadb  
 sudo systemctl status project  
