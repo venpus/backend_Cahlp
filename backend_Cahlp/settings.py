@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-4sj9#oqyf3%=(z@3@cgf_6%1qwea!&jeqcpv3xznj+&1-8=$3+"
-SITE_NAME = "http://localhost:8000"
+SITE_NAME = "http://52.77.244.194"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
