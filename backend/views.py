@@ -194,6 +194,7 @@ class CAMView(APIView):
             device.is_cam = True
             flag = "enable"
         if setting_param !=None  and setting_param.lower() == 'false':
+            flag = "disable"
             device.is_cam = False
         device.save()
         return Response({"ret" : "success", "cam" : flag})
