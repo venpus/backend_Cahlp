@@ -5,19 +5,21 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib import admin
 
 @admin.register(Account)
-class CustomUserAdmin(UserAdmin):
-    """_summary_
-    custom user model that can access by admin panel
-    Args:
-        UserAdmin (_type_): _description_
-    """
-    model = Account
-    list_display : tuple = ('email', 'username', 'mobile','date_joined', 'last_login', 'is_admin', 'is_staff')
-    search_fields : tuple = ('email', 'username',)
-    readonly_fields : tuple = ('date_joined', 'last_login',)
-    filter_horizontal : tuple= ()
-    list_filter : tuple = ()
-    fieldsets : tuple = ()
+class AccountAdmin(admin.ModelAdmin):
+    list_display = ('email', 'username', 'mobile', 'is_admin', 'is_staff', 'is_active', 'is_user')
+    search_fields = ('email', 'username')
+    list_filter = ('is_admin', 'is_staff', 'is_active', 'is_user')
+    fieldsets = (
+        (None, {'fields': ('email', 'username', 'mobile', 'password')}),
+        ('Permissions', {'fields': ('is_admin', 'is_staff', 'is_active', 'is_user')}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'username', 'mobile', 'password1', 'password2', 'is_admin', 'is_staff', 'is_active', 'is_user')}
+        ),
+    )
+
 
 @admin.register(Device)
 class DeviceAdmin(admin.ModelAdmin):
