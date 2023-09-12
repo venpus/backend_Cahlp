@@ -1,5 +1,6 @@
 Lightsail-server.ppk
 Lightsail-server.pem
+backend/migrations/*
 *-env
 
 *.log
