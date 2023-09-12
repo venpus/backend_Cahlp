@@ -23,7 +23,7 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = env("ALLOWED_HOST").split(",")
 CSRF_TRUSTED_ORIGINS =  []
-
+STEAM_SITE = env("STEAM_SITE")
 
 # Application definition
 
