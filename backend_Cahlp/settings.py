@@ -124,7 +124,7 @@ else:
             'NAME': env('DATABASE_DB'),
             'USER': env('DATABASE_USERNAME'),
             'PASSWORD': env('DATABASE_PASSWORD'),
-            #'HOST': env('DATABASE_HOST'),
+            'HOST': env('DATABASE_HOST'),
             #'PORT': env('DATABASE_PORT'),
         }
     }
