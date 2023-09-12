@@ -72,9 +72,4 @@ Setting CAM STATUS
 
 ### Server start stop  
  
-sudo systemctl stop  mariadb  
-sudo systemctl stop project  
-sudo systemctl start  mariadb  
-sudo systemctl start project   
-sudo systemctl status  mariadb  
-sudo systemctl status project  
+sudo /opt/bitnami/ctlscript.sh restart apache

@@ -109,7 +109,7 @@ WSGI_APPLICATION = 'backend_Cahlp.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 
-if DEBUG=="debug":
+if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
