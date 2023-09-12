@@ -2,7 +2,7 @@
 
 
 ### server login details  
-`ssh -i Lightsail-server.pem ubuntu@3.0.184.230` 
+`ssh -i Lightsail-server.pem bitnami@52.77.244.194` 
 
 ### install the required packages  
 `pip freeze > requirements.txt (don't run this)`  

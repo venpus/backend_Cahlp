@@ -90,21 +90,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend_Cahlp.wsgi.application'
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'django_error.log'),  # Specify the path to your log file
-        },
-    },
-    'root': {
-        'handlers': ['file'],
-        'level': 'ERROR',
-    },
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'file': {
+#             'level': 'ERROR',
+#             'class': 'logging.FileHandler',
+#             'filename': os.path.join(BASE_DIR, 'django_error.log'),  # Specify the path to your log file
+#         },
+#     },
+#     'root': {
+#         'handlers': ['file'],
+#         'level': 'ERROR',
+#     },
+# }
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -125,7 +125,7 @@ else:
             'USER': env('DATABASE_USERNAME'),
             'PASSWORD': env('DATABASE_PASSWORD'),
             'HOST': env('DATABASE_HOST'),
-            #'PORT': env('DATABASE_PORT'),
+            'PORT': env('DATABASE_PORT'),
         }
     }
 

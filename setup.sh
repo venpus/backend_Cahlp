@@ -2,7 +2,7 @@
 
 # Define variables for your project
 PROJECT_NAME="backend_Cahlp"
-PYTHON_VERSION="3.11"
+PYTHON_VERSION="3.8"
 VENV_DIR="$PROJECT_NAME-env"
 
 sudo apt install python3.11
