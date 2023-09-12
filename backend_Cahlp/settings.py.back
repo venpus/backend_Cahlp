@@ -1,22 +1,28 @@
 from pathlib import Path
 import os
+import environ
 from urllib.parse import quote_plus
 # Initialise environment variables
+env = environ.Env(
+    DEBUG=(bool, False)
+)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-4sj9#oqyf3%=(z@3@cgf_6%1qwea!&jeqcpv3xznj+&1-8=$3+"
-SITE_NAME = "http://localhost:8000"
+SECRET_KEY = env('SECRET_KEY')
+SITE_NAME = env("SITE_NAME")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = env("ALLOWED_HOST").split(",")
 CSRF_TRUSTED_ORIGINS =  []
-STEAM_SITE = "http://test1.nifskorea.com/live/"
+STEAM_SITE = env("STEAM_SITE")
 
 # Application definition
 
@@ -114,11 +120,11 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': "cahlp",
-            'USER': "root",
-            'PASSWORD': "n9adxWC!x,HV",
-            'HOST': "/opt/bitnami/mariadb/tmp/mysql.sock",
-            'PORT': "3306",
+            'NAME': env('DATABASE_DB'),
+            'USER': env('DATABASE_USERNAME'),
+            'PASSWORD': env('DATABASE_PASSWORD'),
+            'HOST': env('DATABASE_HOST'),
+            'PORT': env('DATABASE_PORT'),
         }
     }
 
