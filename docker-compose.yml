@@ -1,0 +1,35 @@
+version: '2.4'
+services:
+  web:
+    container_name: web
+    build: ./docker/nginx
+    ports:
+      - 8888:80
+    volumes:
+      - ./app:/var/www/html
+    working_dir: /etc/nginx
+    links:
+      - python
+  python:
+    container_name: python
+    build: ./docker/python
+    volumes:
+      - ./app:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      mysql:
+        condition: service_healthy
+  mysql:
+    build: docker/mysql
+    container_name: mysql
+    ports:
+      - 3306:3306
+    volumes:
+      - data-volume:/var/lib/mysql
+    env_file:
+      - ./app/.env
+    healthcheck:
+      test: "exit 0"
+
+volumes:
+  data-volume:
