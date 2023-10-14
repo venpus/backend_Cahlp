@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login
 from backend.serializers.usersserializers import UserRegistrationSerializer, UserLoginSerializer
 from backend.serializers.deviceserializers import DeviceSerializer, DeviceDataSerializer, DeviceDataValidationSerializer,\
     LatestDeviceDataSerializer
+from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
 from backend.models.devicemodel import DeviceData, Device, OTAUpdate
 from django.conf import settings
@@ -214,3 +215,82 @@ class CAMSettingView(APIView):
         else:
             flag = "disable"
         return Response({"ret" : "success", "cam" : flag})
+    
+#new update 2023 - 10 -10
+
+class UserNameDuplicateCheckerView(APIView):
+    permission_classes = (AllowAny,)
+    def get(self, request,  format=None):
+        username = request.query_params.get('username', None)
+        if username:
+            try:
+                user = User.objects.get(username=username)
+            except User.DoesNotExist:
+                return Response({"ret": "success", "detail": "Username is available"}, status=status.HTTP_200_OK)
+            return Response({"ret": "fail", "detail": "Username is already taken"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"ret": "fail", "detail": "Username is required"}, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class ResetUserPasswordView(APIView):
+    permission_classes = (AllowAny,)
+    def get(self, request,  format=None):
+        username = request.query_params.get('username', None)
+        newpasword = request.query_params.get("newpass")
+        confirmpassword = request.query_params.get("confirm")
+        if newpasword != confirmpassword:
+            return Response({"ret": "fail", "detail": "Passwords do not match"}, status=status.HTTP_400_BAD_REQUEST)
+        if username:
+            try:
+                user = User.objects.get(username=username)
+            except User.DoesNotExist:
+                return Response({"ret": "fail", "detail": "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
+            user.set_password(newpasword)
+            user.save()
+            return Response({"ret": "success", "detail": "Password reset successful"}, status=status.HTTP_200_OK)
+        return Response({"ret": "fail", "detail": "Username is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+class SearchDataView(APIView):
+    permission_classes = (AllowAny,)
+    def get(self, request,  format=None):
+        mac_address = request.query_params.get('mac', None)
+        username =  request.query_params.get('username', None)
+        starttime = request.query_params.get("starttime", None)
+        endtime = request.query_params.get("endtime", None)
+        try:
+            # Find the device by MAC address
+            device = Device.objects.get(mac=mac_address, user__username=username)
+        except Device.DoesNotExist:
+            return Response({"ret": "error", "detail": "Device not found"}, status=status.HTTP_404_NOT_FOUND)
+        device_data = DeviceData.objects.filter(device__mac=mac_address, created_at__range=(starttime, endtime))
+        serializer = DeviceDataSerializer(device_data, many=True)
+        return Response({"ret" : "success", "data" : serializer.data, "mac" : mac_address}, status=status.HTTP_200_OK)
+    
+class WithdrawalView(APIView):
+    permission_classes = (AllowAny,)
+    def get(self, request,  format=None):
+        username = request.query_params.get('username', None)
+        password = request.query_params.get("password", None)
+        if username:
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                return Response({"ret": "success", "detail": "User verified"}, status=status.HTTP_200_OK)
+            return Response({"ret": "fail", "detail": "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        return Response({"ret": "fail", "detail": "Username is required"}, status=status.HTTP_400_BAD_REQUEST)
+    
+class DevstatchkView(APIView):
+    permission_classes = (AllowAny,)
+    def get(self, request,  format=None):
+        mac_address = request.query_params.get('mac', None)
+        username =  request.query_params.get('username', None)
+        try:
+            # Find the device by MAC address
+            device = Device.objects.get(mac=mac_address, user__username=username)
+        except Device.DoesNotExist:
+            return Response({"ret": "error", "detail": "Device not found"}, status=status.HTTP_404_NOT_FOUND)
+        serializer = DeviceDataSerializer(device)
+        return Response({"ret" : "success", "data" : serializer.data}, status=status.HTTP_200_OK)
+    
+class SetdevstatView(APIView):
+    permission_classes = (AllowAny,)
+    def get(self, request, format = None):
+        pass
