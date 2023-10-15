@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
 from backend.models.devicemodel import DeviceData, Device, OTAUpdate
 from django.conf import settings
+from datetime import datetime
 User = get_user_model()
 
 class NotFoundAPIView(APIView):
@@ -256,6 +257,17 @@ class SearchDataView(APIView):
         username =  request.query_params.get('username', None)
         starttime = request.query_params.get("starttime", None)
         endtime = request.query_params.get("endtime", None)
+
+        if mac_address == None or username == None or starttime== None or endtime == None:
+             return Response({"ret": "error", "detail": "username, mac, starttime and endtime are required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            starttime = datetime.strptime(starttime, "%Y-%m-%dT%H:%M:%S")
+            endtime = datetime.strptime(endtime, "%Y-%m-%dT%H:%M:%S")
+        except ValueError:
+            return Response({"ret": "error", "detail": "Invalid date format (%Y-%m-%dT%H:%M:%S)"}, status=status.HTTP_400_BAD_REQUEST)
+
+
         try:
             # Find the device by MAC address
             device = Device.objects.get(mac=mac_address, user__username=username)
