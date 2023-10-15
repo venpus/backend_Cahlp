@@ -25,3 +25,13 @@ class OTAUpdate(models.Model):
     created_at = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
     def __str__(self):
         return f"OTA Update - Version: {self.version}"
+    
+class DevStat(models.Model):
+    device = models.ForeignKey(Device, on_delete=models.CASCADE)
+    hv_version = models.CharField(max_length=100)
+    fw_version = models.CharField(max_length=100)
+    wifi_name = models.CharField(max_length=100)
+    wifi_password = models.CharField(max_length=100)
+    created_at = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
+    def __str__(self):
+        return f"DevStat - {self.device.mac} - HV Version: {self.hv_version} - FW Version: {self.fw_version} - Wifi Name: {self.wifi_name} - Wifi Password: {self.wifi_password}"
