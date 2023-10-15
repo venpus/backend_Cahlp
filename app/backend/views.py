@@ -6,10 +6,10 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate, login
 from backend.serializers.usersserializers import UserRegistrationSerializer, UserLoginSerializer
 from backend.serializers.deviceserializers import DeviceSerializer, DeviceDataSerializer, DeviceDataValidationSerializer,\
-    LatestDeviceDataSerializer
+    LatestDeviceDataSerializer, DevStatSerializer
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
-from backend.models.devicemodel import DeviceData, Device, OTAUpdate
+from backend.models.devicemodel import DeviceData, Device, OTAUpdate, DevStat
 from django.conf import settings
 from datetime import datetime
 User = get_user_model()
@@ -299,10 +299,41 @@ class DevstatchkView(APIView):
             device = Device.objects.get(mac=mac_address, user__username=username)
         except Device.DoesNotExist:
             return Response({"ret": "error", "detail": "Device not found"}, status=status.HTTP_404_NOT_FOUND)
-        serializer = DeviceDataSerializer(device)
-        return Response({"ret" : "success", "data" : serializer.data}, status=status.HTTP_200_OK)
+        try:
+            devstat = DevStat.objects.get(device=device)
+        except DevStat.DoesNotExist:
+            return Response({"ret": "error", "detail": "dev stat data not found"}, status=status.HTTP_404_NOT_FOUND)
+        serializer = DevStatSerializer(devstat).data
+        return Response({"ret" : "success","username" : username, "mac" : mac_address, "hw" : serializer["hw_version"], "fw" : serializer["fw_version"]}, status=status.HTTP_200_OK)
     
 class SetdevstatView(APIView):
     permission_classes = (AllowAny,)
     def get(self, request, format = None):
-        pass
+        username = request.query_params.get('username', None)
+        mac_address= request.query_params.get('mac', None)
+        hw_version = request.query_params.get('hw', None)
+        fw_version = request.query_params.get('fw', None)
+        wifi_name = request.query_params.get('ssid', None)
+        wifi_password = request.query_params.get('wpass', None)
+
+        if not username or not mac_address:
+            return Response({"ret": "fail", "detail": "username and mac are required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            # Retrieve the device based on username and mac_address
+            device = Device.objects.get(user__username=username, mac=mac_address)
+        except Device.DoesNotExist:
+            return Response({"ret": "fail", "detail": "Device not found"}, status=status.HTTP_404_NOT_FOUND)
+        # Get the existing DevStat object for the device
+        dev_stat, created = DevStat.objects.get_or_create(device=device)
+        # Update fields only if the input data is not None
+        if hw_version is not None:
+            dev_stat.hv_version = hw_version
+        if fw_version is not None:
+            dev_stat.fw_version = fw_version
+        if wifi_name is not None:
+            dev_stat.wifi_name = wifi_name
+        if wifi_password is not None:
+            dev_stat.wifi_password = wifi_password
+        dev_stat.save()  # Save the updated DevStat
+        return Response({"ret": "success", "detail": "stat is set successfully."}, status=status.HTTP_200_OK)

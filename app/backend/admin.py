@@ -1,5 +1,5 @@
 from backend.models.usermodel import Account
-from backend.models.devicemodel import Device, DeviceData, OTAUpdate
+from backend.models.devicemodel import Device, DeviceData, OTAUpdate, DevStat
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib import admin
@@ -42,3 +42,8 @@ class DeviceDataAdmin(admin.ModelAdmin):
 @admin.register(OTAUpdate)
 class OTAUpdateAdmin(admin.ModelAdmin):
     list_display = ("version", "firmware_file", "created_at")
+
+
+@admin.register(DevStat)
+class DevStatAdmin(admin.ModelAdmin):
+    list_display = ("device", "hw_version", "fw_version", "wifi_name", "wifi_password", "created_at")

@@ -22,8 +22,8 @@ urlpatterns = [
     path('resetpass/', ResetUserPasswordView.as_view(), name='reset-password'),
     path('searchdata/', SearchDataView.as_view(), name='search-data'),
     path('withdrawal/', WithdrawalView.as_view(), name='withdrawal'),
+    path("devstatchk/", DevstatchkView.as_view(), name = "devstatchk"),
     path('setdevstat/', SetdevstatView.as_view(), name='setdevstat'),
-    path("devstatchk/", DevstatchkView.as_view(), name = "devstatchk")
 
 
     

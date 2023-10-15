@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from backend.models.devicemodel import Device, DeviceData
+from backend.models.devicemodel import Device, DeviceData, DevStat
 from datetime import datetime
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -46,3 +46,8 @@ class LatestDeviceDataSerializer(serializers.Serializer):
                 'created_at': latest_data.created_at.strftime("%Y%m%d%H%M%S")
             }
         return None
+
+class DevStatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DevStat
+        fields = ['hw_version', 'fw_version']
