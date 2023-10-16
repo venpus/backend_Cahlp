@@ -10,6 +10,7 @@ services:
     working_dir: /etc/nginx
     links:
       - python
+    entrypoint: ["tail", "-f", "/dev/null"]
   python:
     container_name: python
     build: ./docker/python
@@ -30,6 +31,5 @@ services:
       - ./app/.env
     healthcheck:
       test: "exit 0"
-  entrypoint: ["tail", "-f", "/dev/null"]
 volumes:
   data-volume:
