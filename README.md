@@ -18,7 +18,7 @@ fix mongdb user auth failed : [click here](https://stackoverflow.com/questions/3
 django setup production : [click here](https://www.digitalocean.com/community/tutorials/how-to-serve-django-applications-with-uwsgi-and-nginx-on-debian-8)
 django setup production : [click here](https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html)
 ### test admin login  
-create superuser : python manage.py createsuperuserwithemail
+create superuser : python manage.py createsuperuserwithemail  
 username: demo  
 email: demo@gmail.com  
 password : demo  
@@ -78,8 +78,12 @@ sudo /opt/bitnami/ctlscript.sh restart apache
 
 ## Get Started
 
-```
-$ docker-compose up --build
+```  
+$ docker exec python ./manage.py  shell  
+$ docker-compose up --build  
+$ docker-compose up -d --build
+$ docker-compose up  
+$ docker-compose down  
 ```
 
 ### Development
@@ -123,5 +127,5 @@ $ docker exec python ./manage.py loaddata --verbosity 2 > {path/to/fuxture.json}
 
 create an admin account
 ```
-$ docker exec -it python ./manage.py createsuperuser
+$ docker exec -it python ./manage.py createsuperuserwithemail
 ```
