@@ -30,6 +30,6 @@ services:
       - ./app/.env
     healthcheck:
       test: "exit 0"
-  tty: true
+  entrypoint: ["tail", "-f", "/dev/null"]
 volumes:
   data-volume:
